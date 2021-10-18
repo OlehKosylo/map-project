@@ -12,8 +12,21 @@ export default () => {
     const [waypoints, setWaypoints] = useState([])
 
     useEffect(() => {
-        // todo send request for user location
-        setUserLocation({name: 'source', lat: 49.8409452, lng: 24.0282317})
+        navigator.geolocation.getCurrentPosition((position) => {
+                if (!position.coords) {
+                    alert('Please allow your geolocation.')
+                }
+
+                setUserLocation({
+                    name: 'source',
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+            },
+            (error) => {
+                alert('Please allow your geolocation. Restart application.')
+            }
+        );
 
         // todo selected points
         setWaypoints([
